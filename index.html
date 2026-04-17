@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高校数学Ⅲ グラフ道場</title>
+    <title>高校数学Ⅲ グラフ道場 (全22問版)</title>
     
-    <!-- Tailwind CSS (CDN) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- KaTeX -->
@@ -27,18 +27,10 @@
         body { font-family: sans-serif; background-color: #f8fafc; color: #1e293b; }
         .katex { font-size: 1.1em; }
         .katex-display { margin: 0; }
-        
         .fade-in { animation: fadeIn 0.4s ease-out forwards; }
         .slide-down { animation: slideDown 0.4s ease-out forwards; overflow: hidden; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes slideDown {
-            from { opacity: 0; max-height: 0; padding-top: 0; padding-bottom: 0; }
-            to { opacity: 1; max-height: 2000px; }
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideDown { from { opacity: 0; max-height: 0; padding-top: 0; padding-bottom: 0; } to { opacity: 1; max-height: 3000px; } }
     </style>
 </head>
 <body>
@@ -53,6 +45,7 @@
         const IconShuffle = () => (<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>);
         const IconChevronDown = ({ className }) => (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><polyline points="6 9 12 15 18 9"/></svg>);
         const IconCheckCircle = () => (<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>);
+        const IconSlidersHorizontal = () => (<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="21" y1="4" x2="14" y2="4"/><line x1="10" y1="4" x2="3" y2="4"/><line x1="21" y1="12" x2="12" y2="12"/><line x1="8" y1="12" x2="3" y2="12"/><line x1="21" y1="20" x2="16" y2="20"/><line x1="12" y1="20" x2="3" y2="20"/><line x1="14" y1="2" x2="14" y2="6"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="16" y1="18" x2="16" y2="22"/></svg>);
 
         // --- Math Components ---
         const MathText = ({ math }) => {
@@ -71,104 +64,166 @@
             );
         };
 
-        // --- Problems Database ---
+        // --- Problems Database (All 22 Problems) ---
         const problems = [
             {
-                id: "prob1",
-                funcText: "y = x e^{-x}",
-                y1: "y' = (1-x)e^{-x}",
-                y2: "y'' = (x-2)e^{-x}",
-                table: {
-                    x: ["\\cdots", "1", "\\cdots", "2", "\\cdots"],
-                    y1: ["+", "0", "-", "-", "-"],
-                    y2: ["-", "-", "-", "0", "+"],
-                    y: ["IncUp", "1/e", "DecUp", "2/e^2", "DecDown"]
-                },
-                features: ["極大: $x=1$ のとき $1/e$", "変曲点: $(2, 2/e^2)$", "漸近線: $x$軸 ($\\displaystyle \\lim_{x \\to \\infty} y = 0$)"],
-                plot: {
-                    domain: [-1.5, 6], yDomain: [-1, 0.5], func: (x) => x * Math.exp(-x),
-                    asymptotes: [{ type: 'horizontal', value: 0 }],
-                    points: [{ x: 1, y: 1/Math.E, label: "極大" }, { x: 2, y: 2*Math.exp(-2), label: "変曲点" }]
-                }
+                id: "prob1", difficulty: 1, funcText: "y = x e^{-x}",
+                y1: "y' = (1-x)e^{-x}", y2: "y'' = (x-2)e^{-x}",
+                table: { x: ["\\cdots", "1", "\\cdots", "2", "\\cdots"], y1: ["+", "0", "-", "-", "-"], y2: ["-", "-", "-", "0", "+"], y: ["IncUp", "1/e", "DecUp", "2/e^2", "DecDown"] },
+                features: ["極大: $x=1$ のとき $1/e$", "変曲点: $(2, 2/e^2)$", "漸近線: $y=0$"],
+                plot: { domain: [-1.5, 6], yDomain: [-1, 0.5], func: x => x * Math.exp(-x), asymptotes: [{ type: 'horizontal', value: 0 }], points: [{ x: 1, y: 1/Math.E, label: "極大" }, { x: 2, y: 2*Math.exp(-2), label: "変曲点" }] }
             },
             {
-                id: "prob2",
-                funcText: "y = \\frac{\\log x}{x}",
-                funcCondition: "($x > 0$)",
-                y1: "y' = \\frac{1-\\log x}{x^2}",
-                y2: "y'' = \\frac{2\\log x - 3}{x^3}",
-                table: {
-                    x: ["(0)", "\\cdots", "e", "\\cdots", "e\\sqrt{e}", "\\cdots"],
-                    y1: ["slash", "+", "0", "-", "-", "-"],
-                    y2: ["slash", "-", "-", "-", "0", "+"],
-                    y: ["slash", "IncUp", "1/e", "DecUp", "\\frac{3}{2e\\sqrt{e}}", "DecDown"]
-                },
+                id: "prob2", difficulty: 2, funcText: "y = \\frac{\\log x}{x}", funcCondition: "($x > 0$)",
+                y1: "y' = \\frac{1-\\log x}{x^2}", y2: "y'' = \\frac{2\\log x - 3}{x^3}",
+                table: { x: ["(0)", "\\cdots", "e", "\\cdots", "e\\sqrt{e}", "\\cdots"], y1: ["slash", "+", "0", "-", "-", "-"], y2: ["slash", "-", "-", "-", "0", "+"], y: ["slash", "IncUp", "1/e", "DecUp", "\\frac{3}{2e\\sqrt{e}}", "DecDown"] },
                 features: ["極大: $x=e$ のとき $1/e$", "変曲点: $(e\\sqrt{e}, \\frac{3}{2e\\sqrt{e}})$", "漸近線: $x=0$, $y=0$"],
-                plot: {
-                    domain: [0.01, 12], yDomain: [-1, 0.5], func: (x) => x <= 0 ? null : (Math.log(x) / x),
-                    asymptotes: [{ type: 'vertical', value: 0 }, { type: 'horizontal', value: 0 }],
-                    points: [{ x: Math.E, y: 1/Math.E, label: "極大" }, { x: Math.exp(1.5), y: 1.5*Math.exp(-1.5), label: "変曲点" }]
-                }
+                plot: { domain: [0.01, 12], yDomain: [-1, 0.5], func: x => x <= 0 ? null : (Math.log(x) / x), asymptotes: [{ type: 'vertical', value: 0 }, { type: 'horizontal', value: 0 }], points: [{ x: Math.E, y: 1/Math.E, label: "極大" }, { x: Math.exp(1.5), y: 1.5*Math.exp(-1.5), label: "変曲点" }] }
             },
             {
-                id: "prob3",
-                funcText: "y = \\frac{x^2}{x-1}",
-                funcCondition: "($x \\neq 1$)",
-                y1: "y' = \\frac{x(x-2)}{(x-1)^2}",
-                y2: "y'' = \\frac{2}{(x-1)^3}",
-                table: {
-                    x: ["\\cdots", "0", "\\cdots", "1", "\\cdots", "2", "\\cdots"],
-                    y1: ["+", "0", "-", "slash", "-", "0", "+"],
-                    y2: ["-", "-", "-", "slash", "+", "+", "+"],
-                    y: ["IncUp", "0", "DecUp", "slash", "DecDown", "4", "IncDown"]
-                },
+                id: "prob3", difficulty: 3, funcText: "y = \\frac{x^2}{x-1}", funcCondition: "($x \\neq 1$)",
+                y1: "y' = \\frac{x(x-2)}{(x-1)^2}", y2: "y'' = \\frac{2}{(x-1)^3}",
+                table: { x: ["\\cdots", "0", "\\cdots", "1", "\\cdots", "2", "\\cdots"], y1: ["+", "0", "-", "slash", "-", "0", "+"], y2: ["-", "-", "-", "slash", "+", "+", "+"], y: ["IncUp", "0", "DecUp", "slash", "DecDown", "4", "IncDown"] },
                 features: ["極大: $x=0$ のとき $0$", "極小: $x=2$ のとき $4$", "漸近線: $x=1$, $y=x+1$"],
-                plot: {
-                    domain: [-3, 5], yDomain: [-5, 10], func: (x) => Math.abs(x - 1) < 0.1 ? null : (x*x) / (x-1),
-                    asymptotes: [{ type: 'vertical', value: 1 }, { type: 'oblique', func: x => x+1 }],
-                    points: [{ x: 0, y: 0, label: "極大" }, { x: 2, y: 4, label: "極小" }]
-                }
+                plot: { domain: [-3, 5], yDomain: [-5, 10], func: x => Math.abs(x - 1) < 0.1 ? null : (x*x) / (x-1), asymptotes: [{ type: 'vertical', value: 1 }, { type: 'oblique', func: x => x+1 }], points: [{ x: 0, y: 0, label: "極大" }, { x: 2, y: 4, label: "極小" }] }
             },
             {
-                id: "prob4",
-                funcText: "y = e^{-x^2}",
-                y1: "y' = -2xe^{-x^2}",
-                y2: "y'' = 2(2x^2-1)e^{-x^2}",
-                table: {
-                    x: ["\\cdots", "-\\frac{1}{\\sqrt{2}}", "\\cdots", "0", "\\cdots", "\\frac{1}{\\sqrt{2}}", "\\cdots"],
-                    y1: ["+", "+", "+", "0", "-", "-", "-"],
-                    y2: ["+", "0", "-", "-", "-", "0", "+"],
-                    y: ["IncDown", "1/\\sqrt{e}", "IncUp", "1", "DecUp", "1/\\sqrt{e}", "DecDown"]
-                },
+                id: "prob4", difficulty: 1, funcText: "y = e^{-x^2}",
+                y1: "y' = -2xe^{-x^2}", y2: "y'' = 2(2x^2-1)e^{-x^2}",
+                table: { x: ["\\cdots", "-\\frac{1}{\\sqrt{2}}", "\\cdots", "0", "\\cdots", "\\frac{1}{\\sqrt{2}}", "\\cdots"], y1: ["+", "+", "+", "0", "-", "-", "-"], y2: ["+", "0", "-", "-", "-", "0", "+"], y: ["IncDown", "1/\\sqrt{e}", "IncUp", "1", "DecUp", "1/\\sqrt{e}", "DecDown"] },
                 features: ["極大: $x=0$ のとき $1$", "変曲点: $(\\pm \\frac{1}{\\sqrt{2}}, \\frac{1}{\\sqrt{e}})$", "漸近線: $y=0$"],
-                plot: {
-                    domain: [-3, 3], yDomain: [-0.2, 1.2], func: (x) => Math.exp(-x*x),
-                    asymptotes: [{ type: 'horizontal', value: 0 }],
-                    points: [{ x: -1/Math.SQRT2, y: Math.exp(-0.5), label: "変曲点" }, { x: 0, y: 1, label: "極大" }, { x: 1/Math.SQRT2, y: Math.exp(-0.5), label: "変曲点" }]
-                }
+                plot: { domain: [-3, 3], yDomain: [-0.2, 1.2], func: x => Math.exp(-x*x), asymptotes: [{ type: 'horizontal', value: 0 }], points: [{ x: -1/Math.SQRT2, y: Math.exp(-0.5), label: "変曲点" }, { x: 0, y: 1, label: "極大" }, { x: 1/Math.SQRT2, y: Math.exp(-0.5), label: "変曲点" }] }
             },
             {
-                id: "prob5",
-                funcText: "y = x - \\sin x",
-                funcCondition: "($0 \\le x \\le 2\\pi$)",
-                y1: "y' = 1 - \\cos x",
-                y2: "y'' = \\sin x",
-                table: {
-                    x: ["0", "\\cdots", "\\pi", "\\cdots", "2\\pi"],
-                    y1: ["0", "+", "+", "+", "0"],
-                    y2: ["0", "+", "0", "-", "0"],
-                    y: ["0", "IncDown", "\\pi", "IncUp", "2\\pi"]
-                },
+                id: "prob5", difficulty: 1, funcText: "y = x - \\sin x", funcCondition: "($0 \\le x \\le 2\\pi$)",
+                y1: "y' = 1 - \\cos x", y2: "y'' = \\sin x",
+                table: { x: ["0", "\\cdots", "\\pi", "\\cdots", "2\\pi"], y1: ["0", "+", "+", "+", "0"], y2: ["0", "+", "0", "-", "0"], y: ["0", "IncDown", "\\pi", "IncUp", "2\\pi"] },
                 features: ["極値なし (単調増加)", "変曲点: $(\\pi, \\pi)$"],
-                plot: {
-                    domain: [0, 2*Math.PI], yDomain: [-0.5, 6.5], func: (x) => x - Math.sin(x),
-                    asymptotes: [],
-                    points: [{ x: 0, y: 0, label: "" }, { x: Math.PI, y: Math.PI, label: "変曲点" }, { x: 2*Math.PI, y: 2*Math.PI, label: "" }]
-                }
+                plot: { domain: [0, 2*Math.PI], yDomain: [-0.5, 6.5], func: x => x - Math.sin(x), asymptotes: [], points: [{ x: 0, y: 0, label: "" }, { x: Math.PI, y: Math.PI, label: "変曲点" }, { x: 2*Math.PI, y: 2*Math.PI, label: "" }] }
+            },
+            {
+                id: "prob6", difficulty: 2, funcText: "y = x \\log x", funcCondition: "($x > 0$)",
+                y1: "y' = \\log x + 1", y2: "y'' = \\frac{1}{x}",
+                table: { x: ["(0)", "\\cdots", "\\frac{1}{e}", "\\cdots"], y1: ["slash", "-", "0", "+"], y2: ["slash", "+", "+", "+"], y: ["slash", "DecUp", "-\\frac{1}{e}", "IncUp"] },
+                features: ["極小: $x=1/e$ のとき $-1/e$", "変曲点: なし", "漸近線なし ($\\displaystyle \\lim_{x \\to +0} y = 0$)"],
+                plot: { domain: [0.01, 5], yDomain: [-0.5, 5], func: x => x <= 0 ? null : x * Math.log(x), asymptotes: [], points: [{ x: 1/Math.E, y: -1/Math.E, label: "極小" }] }
+            },
+            {
+                id: "prob7", difficulty: 2, funcText: "y = \\frac{x}{x^2+1}",
+                y1: "y' = \\frac{1-x^2}{(x^2+1)^2}", y2: "y'' = \\frac{2x(x^2-3)}{(x^2+1)^3}",
+                table: { x: ["\\cdots", "-\\sqrt{3}", "\\cdots", "-1", "\\cdots", "0", "\\cdots", "1", "\\cdots", "\\sqrt{3}", "\\cdots"], y1: ["-", "-", "-", "0", "+", "+", "+", "0", "-", "-", "-"], y2: ["-", "0", "+", "+", "+", "0", "-", "-", "-", "0", "+"], y: ["DecDown", "-\\frac{\\sqrt{3}}{4}", "DecUp", "-\\frac{1}{2}", "IncUp", "0", "IncDown", "\\frac{1}{2}", "DecDown", "\\frac{\\sqrt{3}}{4}", "DecUp"] },
+                features: ["極大: $x=1$ のとき $1/2$", "極小: $x=-1$ のとき $-1/2$", "変曲点: $(0,0), (\\pm \\sqrt{3}, \\pm \\frac{\\sqrt{3}}{4})$", "漸近線: $y=0$"],
+                plot: { domain: [-5, 5], yDomain: [-1, 1], func: x => x / (x*x + 1), asymptotes: [{ type: 'horizontal', value: 0 }], points: [{ x: -1, y: -0.5, label: "極小" }, { x: 1, y: 0.5, label: "極大" }, { x: 0, y: 0, label: "変曲点" } ] }
+            },
+            {
+                id: "prob8", difficulty: 3, funcText: "y = \\frac{x^3}{x^2-1}", funcCondition: "($x \\neq \\pm 1$)",
+                y1: "y' = \\frac{x^2(x^2-3)}{(x^2-1)^2}", y2: "y'' = \\frac{2x(x^2+3)}{(x^2-1)^3}",
+                table: { x: ["\\cdots", "-\\sqrt{3}", "\\cdots", "-1", "\\cdots", "0", "\\cdots", "1", "\\cdots", "\\sqrt{3}", "\\cdots"], y1: ["+", "0", "-", "slash", "-", "0", "-", "slash", "-", "0", "+"], y2: ["-", "-", "-", "slash", "+", "0", "-", "slash", "+", "+", "+"], y: ["IncUp", "-\\frac{3\\sqrt{3}}{2}", "DecUp", "slash", "DecDown", "0", "DecUp", "slash", "DecDown", "\\frac{3\\sqrt{3}}{2}", "IncDown"] },
+                features: ["極大: $x=-\\sqrt{3}$ のとき $-3\\sqrt{3}/2$", "極小: $x=\\sqrt{3}$ のとき $3\\sqrt{3}/2$", "変曲点: $(0,0)$", "漸近線: $x=\\pm 1$, $y=x$"],
+                plot: { domain: [-4, 4], yDomain: [-8, 8], func: x => (Math.abs(x - 1) < 0.1 || Math.abs(x + 1) < 0.1) ? null : (x*x*x) / (x*x - 1), asymptotes: [{ type: 'vertical', value: 1 }, { type: 'vertical', value: -1 }, { type: 'oblique', func: x => x }], points: [{ x: -Math.sqrt(3), y: -1.5*Math.sqrt(3), label: "極大" }, { x: Math.sqrt(3), y: 1.5*Math.sqrt(3), label: "極小" }, { x: 0, y: 0, label: "変曲点" }] }
+            },
+            {
+                id: "prob9", difficulty: 2, funcText: "y = \\frac{e^x}{x}", funcCondition: "($x \\neq 0$)",
+                y1: "y' = \\frac{e^x(x-1)}{x^2}", y2: "y'' = \\frac{e^x(x^2-2x+2)}{x^3}",
+                table: { x: ["\\cdots", "0", "\\cdots", "1", "\\cdots"], y1: ["-", "slash", "-", "0", "+"], y2: ["-", "slash", "+", "+", "+"], y: ["DecDown", "slash", "DecUp", "e", "IncUp"] },
+                features: ["極小: $x=1$ のとき $e$", "変曲点: なし", "漸近線: $x=0$, $y=0$"],
+                plot: { domain: [-4, 3], yDomain: [-5, 10], func: x => Math.abs(x) < 0.05 ? null : Math.exp(x) / x, asymptotes: [{ type: 'vertical', value: 0 }, { type: 'horizontal', value: 0 }], points: [{ x: 1, y: Math.E, label: "極小" }] }
+            },
+            {
+                id: "prob10", difficulty: 1, funcText: "y = \\frac{1}{x^2+1}",
+                y1: "y' = \\frac{-2x}{(x^2+1)^2}", y2: "y'' = \\frac{6x^2-2}{(x^2+1)^3}",
+                table: { x: ["\\cdots", "-\\frac{1}{\\sqrt{3}}", "\\cdots", "0", "\\cdots", "\\frac{1}{\\sqrt{3}}", "\\cdots"], y1: ["+", "+", "+", "0", "-", "-", "-"], y2: ["+", "0", "-", "-", "-", "0", "+"], y: ["IncUp", "3/4", "IncDown", "1", "DecDown", "3/4", "DecUp"] },
+                features: ["極大: $x=0$ のとき $1$", "変曲点: $(\\pm\\frac{1}{\\sqrt{3}}, \\frac{3}{4})$", "漸近線: $y=0$"],
+                plot: { domain: [-4, 4], yDomain: [-0.2, 1.2], func: x => 1 / (x*x + 1), asymptotes: [{ type: 'horizontal', value: 0 }], points: [{ x: 0, y: 1, label: "極大" }, { x: -1/Math.sqrt(3), y: 0.75, label: "変曲点" }, { x: 1/Math.sqrt(3), y: 0.75, label: "変曲点" }] }
+            },
+            {
+                id: "prob11", difficulty: 1, funcText: "y = \\log(x^2+1)",
+                y1: "y' = \\frac{2x}{x^2+1}", y2: "y'' = \\frac{2-2x^2}{(x^2+1)^2}",
+                table: { x: ["\\cdots", "-1", "\\cdots", "0", "\\cdots", "1", "\\cdots"], y1: ["-", "-", "-", "0", "+", "+", "+"], y2: ["-", "0", "+", "+", "+", "0", "-"], y: ["DecDown", "\\log 2", "DecUp", "0", "IncUp", "\\log 2", "IncDown"] },
+                features: ["極小: $x=0$ のとき $0$", "変曲点: $(\\pm 1, \\log 2)$", "漸近線: なし"],
+                plot: { domain: [-4, 4], yDomain: [-0.5, 3], func: x => Math.log(x*x + 1), asymptotes: [], points: [{ x: 0, y: 0, label: "極小" }] }
+            },
+            {
+                id: "prob12", difficulty: 3, funcText: "y = x + \\sqrt{1-x^2}", funcCondition: "($-1 \\le x \\le 1$)",
+                y1: "y' = 1 - \\frac{x}{\\sqrt{1-x^2}}", y2: "y'' = -\\frac{1}{(1-x^2)^{\\frac{3}{2}}}",
+                table: { x: ["-1", "\\cdots", "\\frac{1}{\\sqrt{2}}", "\\cdots", "1"], y1: ["slash", "+", "0", "-", "slash"], y2: ["slash", "-", "-", "-", "slash"], y: ["-1", "IncDown", "\\sqrt{2}", "DecDown", "1"] },
+                features: ["極大: $x=\\frac{1}{\\sqrt{2}}$ のとき $\\sqrt{2}$", "※グラフは円の一部を変形した形になる"],
+                plot: { domain: [-1.2, 1.2], yDomain: [-1.5, 1.8], func: x => (x < -1 || x > 1) ? null : x + Math.sqrt(1 - x*x), asymptotes: [], points: [{ x: 1/Math.SQRT2, y: Math.SQRT2, label: "極大" }, { x: -1, y: -1, label: "端点" }, { x: 1, y: 1, label: "端点" }] }
+            },
+            {
+                id: "prob13", difficulty: 3, funcText: "y = e^{-x} \\sin x", funcCondition: "($0 \\le x \\le 2\\pi$)",
+                y1: "y' = \\sqrt{2}e^{-x} \\cos(x+\\frac{\\pi}{4})", y2: "y'' = -2e^{-x} \\cos x",
+                table: { x: ["0", "\\cdots", "\\frac{\\pi}{4}", "\\cdots", "\\frac{\\pi}{2}", "\\cdots", "\\frac{5\\pi}{4}", "\\cdots", "\\frac{3\\pi}{2}", "\\cdots", "2\\pi"], y1: ["+", "+", "0", "-", "-", "-", "0", "+", "+", "+", "+"], y2: ["-", "-", "-", "-", "0", "+", "+", "+", "0", "-", "-"], y: ["0", "IncDown", "\\frac{1}{\\sqrt{2}e^{\\frac{\\pi}{4}}}", "DecDown", "e^{-\\frac{\\pi}{2}}", "DecUp", "\\frac{-1}{\\sqrt{2}e^{\\frac{5\\pi}{4}}}", "IncUp", "-e^{-\\frac{3\\pi}{2}}", "IncDown", "0"] },
+                features: ["極大: $x=\\frac{\\pi}{4}$ のとき $\\frac{1}{\\sqrt{2}e^{\\pi/4}}$", "極小: $x=\\frac{5\\pi}{4}$ のとき $\\frac{-1}{\\sqrt{2}e^{5\\pi/4}}$", "変曲点: $(\\frac{\\pi}{2}, e^{-\\pi/2}), (\\frac{3\\pi}{2}, -e^{-3\\pi/2})$"],
+                plot: { domain: [0, 2*Math.PI], yDomain: [-0.3, 0.4], func: x => Math.exp(-x) * Math.sin(x), asymptotes: [], points: [{ x: Math.PI/4, y: Math.exp(-Math.PI/4)*Math.sin(Math.PI/4), label: "極大" }, { x: 5*Math.PI/4, y: Math.exp(-5*Math.PI/4)*Math.sin(5*Math.PI/4), label: "極小" }] }
+            },
+            {
+                id: "prob14", difficulty: 2, funcText: "y = x^2 \\log x", funcCondition: "($x > 0$)",
+                y1: "y' = x(2\\log x + 1)", y2: "y'' = 2\\log x + 3",
+                table: { x: ["(0)", "\\cdots", "e^{-\\frac{3}{2}}", "\\cdots", "e^{-\\frac{1}{2}}", "\\cdots"], y1: ["slash", "-", "-", "-", "0", "+"], y2: ["slash", "-", "0", "+", "+", "+"], y: ["slash", "DecDown", "-\\frac{3}{2}e^{-3}", "DecUp", "-\\frac{1}{2e}", "IncUp"] },
+                features: ["極小: $x=1/\\sqrt{e}$ のとき $-1/(2e)$", "変曲点: $(e^{-3/2}, -\\frac{3}{2}e^{-3})$", "漸近線なし ($\\displaystyle \\lim_{x \\to +0} y = 0$)"],
+                plot: { domain: [0.01, 2], yDomain: [-0.5, 2], func: x => x <= 0 ? null : x*x*Math.log(x), asymptotes: [], points: [{ x: Math.exp(-0.5), y: -0.5*Math.exp(-1), label: "極小" }] }
+            },
+            {
+                id: "prob15", difficulty: 2, funcText: "y = x \\sqrt{4-x^2}", funcCondition: "($-2 \\le x \\le 2$)",
+                y1: "y' = \\frac{4-2x^2}{\\sqrt{4-x^2}}", y2: "y'' = \\frac{2x(x^2-6)}{(4-x^2)^{\\frac{3}{2}}}",
+                table: { x: ["-2", "\\cdots", "-\\sqrt{2}", "\\cdots", "0", "\\cdots", "\\sqrt{2}", "\\cdots", "2"], y1: ["slash", "-", "0", "+", "+", "+", "0", "-", "slash"], y2: ["slash", "+", "+", "+", "0", "-", "-", "-", "slash"], y: ["0", "DecUp", "-2", "IncUp", "0", "IncDown", "2", "DecDown", "0"] },
+                features: ["極大: $x=\\sqrt{2}$ のとき $2$", "極小: $x=-\\sqrt{2}$ のとき $-2$", "変曲点: $(0,0)$"],
+                plot: { domain: [-2.2, 2.2], yDomain: [-3, 3], func: x => (x < -2 || x > 2) ? null : x*Math.sqrt(4-x*x), asymptotes: [], points: [{ x: Math.SQRT2, y: 2, label: "極大" }, { x: -Math.SQRT2, y: -2, label: "極小" }] }
+            },
+            {
+                id: "prob16", difficulty: 2, funcText: "y = \\frac{x}{\\log x}", funcCondition: "($x > 0, x \\neq 1$)",
+                y1: "y' = \\frac{\\log x - 1}{(\\log x)^2}", y2: "y'' = \\frac{2-\\log x}{x(\\log x)^3}",
+                table: { x: ["(0)", "\\cdots", "1", "\\cdots", "e", "\\cdots", "e^2", "\\cdots"], y1: ["slash", "-", "slash", "-", "0", "+", "+", "+"], y2: ["slash", "-", "slash", "+", "+", "+", "0", "-"], y: ["slash", "DecDown", "slash", "DecUp", "e", "IncUp", "e^2/2", "IncDown"] },
+                features: ["極小: $x=e$ のとき $e$", "変曲点: $(e^2, e^2/2)$", "漸近線: $x=1$"],
+                plot: { domain: [0.01, 10], yDomain: [-5, 12], func: x => (x<=0 || Math.abs(x-1)<0.05) ? null : x/Math.log(x), asymptotes: [{ type: 'vertical', value: 1 }], points: [{ x: Math.E, y: Math.E, label: "極小" }] }
+            },
+            {
+                id: "prob17", difficulty: 1, funcText: "y = (x-1)e^x",
+                y1: "y' = x e^x", y2: "y'' = (x+1)e^x",
+                table: { x: ["\\cdots", "-1", "\\cdots", "0", "\\cdots"], y1: ["-", "-", "-", "0", "+"], y2: ["-", "0", "+", "+", "+"], y: ["DecDown", "-2/e", "DecUp", "-1", "IncUp"] },
+                features: ["極小: $x=0$ のとき $-1$", "変曲点: $(-1, -2/e)$", "漸近線: $y=0$"],
+                plot: { domain: [-4, 2], yDomain: [-1.5, 3], func: x => (x-1)*Math.exp(x), asymptotes: [{ type: 'horizontal', value: 0 }], points: [{ x: 0, y: -1, label: "極小" }] }
+            },
+            {
+                id: "prob18", difficulty: 2, funcText: "y = \\frac{1+\\log x}{x}", funcCondition: "($x > 0$)",
+                y1: "y' = \\frac{-\\log x}{x^2}", y2: "y'' = \\frac{2\\log x - 1}{x^3}",
+                table: { x: ["(0)", "\\cdots", "1", "\\cdots", "\\sqrt{e}", "\\cdots"], y1: ["slash", "+", "0", "-", "-", "-"], y2: ["slash", "-", "-", "-", "0", "+"], y: ["slash", "IncDown", "1", "DecDown", "\\frac{3}{2\\sqrt{e}}", "DecUp"] },
+                features: ["極大: $x=1$ のとき $1$", "変曲点: $(\\sqrt{e}, \\frac{3}{2\\sqrt{e}})$", "漸近線: $x=0, y=0$"],
+                plot: { domain: [0.01, 8], yDomain: [-2, 1.5], func: x => x <= 0 ? null : (1+Math.log(x))/x, asymptotes: [{ type: 'vertical', value: 0 }, { type: 'horizontal', value: 0 }], points: [{ x: 1, y: 1, label: "極大" }] }
+            },
+            {
+                id: "prob19", difficulty: 1, funcText: "y = |\\log x|", funcCondition: "($x > 0$)",
+                y1: "y' = \\begin{cases} \\frac{1}{x} & (x > 1) \\\\ -\\frac{1}{x} & (0 < x < 1) \\end{cases}", 
+                y2: "y'' = \\begin{cases} -\\frac{1}{x^2} & (x > 1) \\\\ \\frac{1}{x^2} & (0 < x < 1) \\end{cases}",
+                table: { x: ["(0)", "\\cdots", "1", "\\cdots"], y1: ["slash", "-", "slash", "+"], y2: ["slash", "+", "slash", "-"], y: ["slash", "DecUp", "0", "IncDown"] },
+                features: ["極小(尖点): $x=1$ のとき $0$ (微分不可能)", "変曲点: なし", "漸近線: $x=0$"],
+                plot: { domain: [0.01, 5], yDomain: [-0.5, 3], func: x => x<=0 ? null : Math.abs(Math.log(x)), asymptotes: [{type: 'vertical', value: 0}], points: [{x: 1, y: 0, label: "尖点(極小)"}] }
+            },
+            {
+                id: "prob20", difficulty: 3, funcText: "y = x^{\\frac{2}{3}}(x-5)",
+                y1: "y' = \\frac{5(x-2)}{3\\sqrt[3]{x}}", y2: "y'' = \\frac{10(x+1)}{9x\\sqrt[3]{x}}",
+                table: { x: ["\\cdots", "-1", "\\cdots", "0", "\\cdots", "2", "\\cdots"], y1: ["+", "+", "+", "slash", "-", "0", "+"], y2: ["-", "0", "+", "slash", "+", "+", "+"], y: ["IncDown", "-6", "IncUp", "0", "DecUp", "-3\\sqrt[3]{4}", "IncUp"] },
+                features: ["極大(尖点): $x=0$ のとき $0$ (微分不可能)", "極小: $x=2$ のとき $-3\\sqrt[3]{4}$", "変曲点: $(-1, -6)$"],
+                plot: { domain: [-3, 5], yDomain: [-8, 5], func: x => Math.pow(Math.abs(x), 2/3) * (x - 5), asymptotes: [], points: [{x: 0, y: 0, label: "尖点(極大)"}, {x: 2, y: -4.762, label: "極小"}, {x: -1, y: -6, label: "変曲点"}] }
+            },
+            {
+                id: "prob21", difficulty: 1, funcText: "y = e^{-|x|}",
+                y1: "y' = \\begin{cases} -e^{-x} & (x > 0) \\\\ e^x & (x < 0) \\end{cases}", y2: "y'' = \\begin{cases} e^{-x} & (x > 0) \\\\ e^x & (x < 0) \\end{cases}",
+                table: { x: ["\\cdots", "0", "\\cdots"], y1: ["+", "slash", "-"], y2: ["+", "slash", "+"], y: ["IncUp", "1", "DecUp"] },
+                features: ["極大(尖点): $x=0$ のとき $1$ (微分不可能)", "変曲点: なし", "漸近線: $y=0$"],
+                plot: { domain: [-4, 4], yDomain: [-0.2, 1.2], func: x => Math.exp(-Math.abs(x)), asymptotes: [{type: 'horizontal', value: 0}], points: [{x: 0, y: 1, label: "尖点(極大)"}] }
+            },
+            {
+                id: "prob22", difficulty: 2, funcText: "y = \\frac{|x|}{x-1}", funcCondition: "($x \\neq 1$)",
+                y1: "y' = \\begin{cases} -\\frac{1}{(x-1)^2} & (x > 0) \\\\ \\frac{1}{(x-1)^2} & (x < 0) \\end{cases}", y2: "y'' = \\begin{cases} \\frac{2}{(x-1)^3} & (x > 0) \\\\ -\\frac{2}{(x-1)^3} & (x < 0) \\end{cases}",
+                table: { x: ["\\cdots", "0", "\\cdots", "1", "\\cdots"], y1: ["+", "slash", "-", "slash", "-"], y2: ["+", "slash", "-", "slash", "+"], y: ["IncUp", "0", "DecDown", "slash", "DecUp"] },
+                features: ["極大(尖点): $x=0$ のとき $0$ (微分不可能)", "漸近線: $x=1$, $y=1$ ($x \\to \\infty$), $y=-1$ ($x \\to -\\infty$)"],
+                plot: { domain: [-5, 5], yDomain: [-4, 4], func: x => Math.abs(x-1) < 0.1 ? null : Math.abs(x)/(x-1), asymptotes: [{type: 'vertical', value: 1}, {type: 'horizontal', value: 1}, {type: 'horizontal', value: -1}], points: [{x: 0, y: 0, label: "尖点(極大)"}] }
             }
         ];
 
-        // --- Components ---
+        // --- View Components ---
         const CurveIcon = ({ type }) => {
             if (type === 'IncUp') return <svg width="24" height="24" viewBox="0 0 24 24" className="stroke-blue-600 fill-none mx-auto" strokeWidth="2"><path d="M 4 20 Q 4 4 20 4"/><path d="M 14 4 L 20 4 L 20 10"/></svg>;
             if (type === 'IncDown') return <svg width="24" height="24" viewBox="0 0 24 24" className="stroke-blue-600 fill-none mx-auto" strokeWidth="2"><path d="M 4 20 Q 20 20 20 4"/><path d="M 14 4 L 20 4 L 20 10"/></svg>;
@@ -241,16 +296,28 @@
             );
         };
 
+        const DIFFICULTY_LABELS = { all: '全レベル', 1: '基礎', 2: '標準', 3: '応用' };
+
         const App = () => {
             const [problem, setProblem] = useState(null);
             const [showSolution, setShowSolution] = useState(false);
+            const [difficulty, setDifficulty] = useState('all');
 
-            useEffect(() => { generateProblem(); }, []);
+            useEffect(() => { generateProblem('all'); }, []);
 
-            const generateProblem = () => {
-                const available = problems.filter(p => !problem || p.id !== problem.id);
+            const generateProblem = (currentDiff = difficulty) => {
+                let available = problems.filter(p => !problem || p.id !== problem.id);
+                if (currentDiff !== 'all') {
+                    available = available.filter(p => p.difficulty === currentDiff);
+                    if (available.length === 0) available = problems.filter(p => p.difficulty === currentDiff);
+                }
                 setProblem(available[Math.floor(Math.random() * available.length)]);
                 setShowSolution(false);
+            };
+
+            const handleDiffChange = (diff) => {
+                setDifficulty(diff);
+                generateProblem(diff);
             };
 
             if (!problem) return null;
@@ -261,19 +328,44 @@
                         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
                             <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white"><IconFileText /></div>
-                                <h1 className="text-xl font-bold text-slate-900">高校数学Ⅲ グラフ道場</h1>
+                                <h1 className="text-xl font-bold text-slate-900">高校数学Ⅲ グラフ道場 <span className="text-xs ml-1 bg-slate-200 text-slate-600 px-2 py-1 rounded">全22問</span></h1>
                             </div>
-                            <button onClick={generateProblem} className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-full font-medium text-slate-700 border border-slate-200">
+                            <button onClick={() => generateProblem()} className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-full font-medium text-slate-700 border border-slate-200">
                                 <IconShuffle /> <span className="hidden sm:inline">ランダム出題</span>
                             </button>
                         </div>
                     </header>
 
                     <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+                        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white p-2 rounded-2xl shadow-sm border border-slate-200 slide-down">
+                            <div className="flex items-center gap-2 px-3 text-slate-500 font-medium text-sm">
+                                <IconSlidersHorizontal /> 難易度選択:
+                            </div>
+                            <div className="flex justify-center flex-wrap bg-slate-100 p-1 rounded-xl">
+                                {['all', 1, 2, 3].map(diff => (
+                                    <button
+                                        key={diff}
+                                        onClick={() => handleDiffChange(diff)}
+                                        className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+                                            difficulty === diff 
+                                              ? 'bg-white text-blue-600 shadow-sm border border-slate-200' 
+                                              : 'text-slate-500 hover:text-slate-700 hover:bg-slate-200/50 border border-transparent'
+                                        }`}
+                                    >
+                                        {diff === 'all' ? 'すべて' : `★${diff} ${DIFFICULTY_LABELS[diff]}`}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
                         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden fade-in">
-                            <div className="bg-slate-800 text-white px-6 py-4 flex flex-wrap gap-3 items-center">
+                            <div className="bg-slate-800 text-white px-6 py-4 flex flex-wrap items-center gap-3">
                                 <span className="bg-blue-500 text-xs font-bold px-2 py-1.5 rounded uppercase">Question</span>
-                                <h2 className="text-lg font-medium">次の関数の増減、極値、漸近線を調べ、グラフの概形をかけ。</h2>
+                                <span className={`text-xs font-bold px-2 py-1.5 rounded ${
+                                    problem.difficulty === 1 ? 'bg-green-500/20 text-green-300' :
+                                    problem.difficulty === 2 ? 'bg-yellow-500/20 text-yellow-300' : 'bg-red-500/20 text-red-300'
+                                }`}>★{problem.difficulty} {DIFFICULTY_LABELS[problem.difficulty]}</span>
+                                <h2 className="text-lg font-medium ml-1">次の関数の増減、極値、漸近線を調べ、グラフの概形をかけ。</h2>
                             </div>
                             <div className="p-8 md:p-12 text-center flex flex-col items-center min-h-[12rem] justify-center overflow-x-auto">
                                 <div className="text-4xl md:text-5xl py-4"><MathText math={problem.funcText} /></div>
@@ -296,7 +388,6 @@
                                     <span className="text-blue-600"><IconCheckCircle /></span>
                                     <h2 className="text-2xl font-bold text-slate-800">解答・解説</h2>
                                 </div>
-                                
                                 <div className="p-6 md:p-10 space-y-12">
                                     <section className="space-y-4">
                                         <h3 className="text-xl font-bold flex items-center gap-2"><span className="bg-blue-100 text-blue-700 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>導関数</h3>
@@ -324,7 +415,7 @@
                                     </section>
                                     
                                     <div className="pt-8 border-t border-slate-200 flex justify-center">
-                                        <button onClick={() => { window.scrollTo({top:0, behavior:'smooth'}); setTimeout(generateProblem, 300); }} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl">
+                                        <button onClick={() => { window.scrollTo({top:0, behavior:'smooth'}); setTimeout(()=>generateProblem(), 300); }} className="flex items-center gap-2 bg-slate-800 hover:bg-slate-900 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl">
                                             <IconShuffle /><span>次の問題に挑戦</span>
                                         </button>
                                     </div>
